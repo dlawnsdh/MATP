@@ -57,9 +57,6 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeExchange(auth -> auth
                         .pathMatchers(HttpMethod.GET,"/**").permitAll()
-                        .pathMatchers(HttpMethod.POST,"/**").permitAll()
-                        .pathMatchers(HttpMethod.PATCH,"/**").permitAll()
-                        .pathMatchers(HttpMethod.DELETE,"/**").permitAll()
                         .pathMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyExchange().authenticated()
                 )
@@ -69,18 +66,6 @@ public class SecurityConfig {
                 .addFilterAt(new JwtAuthenticationFilter(jwtTokenProvider), SecurityWebFiltersOrder.HTTP_BASIC)
                 .build();
     }
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of(""));
-//        configuration.setAllowedHeaders(List.of("*"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE","OPTIONS"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
 
     /**
      * ReactiveOAuth2UserService를 사용하여 로그인시 가져온 유저 정보를 토대로 MemberPrincipal로 변환하여 반환한다

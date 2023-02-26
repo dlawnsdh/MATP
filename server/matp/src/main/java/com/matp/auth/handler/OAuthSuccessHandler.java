@@ -45,10 +45,8 @@ public class OAuthSuccessHandler implements ServerAuthenticationSuccessHandler {
 
         String accessToken = delegateAccessToken(principal);
         String refreshToken = delegateRefreshToken(principal);
-//        webFilterExchange.getExchange().getResponse().getHeaders().add(HttpHeaders.AUTHORIZATION, accessToken);
 
         location = createUri(accessToken,refreshToken);
-
 
         ServerWebExchange exchange = webFilterExchange.getExchange();
         return this.requestCache.getRedirectUri(exchange).defaultIfEmpty(this.location)
@@ -64,21 +62,11 @@ public class OAuthSuccessHandler implements ServerAuthenticationSuccessHandler {
         Date expiration = jwtTokenProvider.getTokenExpiration(jwtTokenProvider.getRefreshTokenExpirationMinutes());
         return jwtTokenProvider.createRefreshToken(principal, expiration);
     }
-//    private URI createUri() {
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("http")
-//                .host("localhost")
-//                .port(3000)
-//                .path("/")
-//                .build()
-//                .toUri();
-//    }
 
     private URI createUri(String accessToken, String refreshToken) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
-//        queryParams.add("refresh_token", refreshToken);
+        queryParams.add("refresh_token", refreshToken);
 
         return UriComponentsBuilder
                 .newInstance()
